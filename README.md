@@ -32,11 +32,13 @@ The purpose is to automatize the deployment of all the resources needed to creat
 
 Install and follow [instructions](https://serverless.com/framework/docs/providers/aws/guide/installation/) to setup serverless with AWS
 
-`npm install`
+`npm install aws-sdk serverless-appsync-plugin serverless-offline serverless-dynamodb-local serverless-appsync-offline --save-dev`
 
 `serverless deploy`
 
 ## Test locally
+
+`npm install aws-sdk serverless-appsync-plugin serverless-offline serverless-dynamodb-local serverless-appsync-offline --save-dev`
 
 `serverless dynamodb install --localPath ./bin`
 
