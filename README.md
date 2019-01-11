@@ -38,7 +38,7 @@ Install and follow [instructions](https://serverless.com/framework/docs/provider
 
 ## Test locally
 
-`serverless dynamodb install - localPath ./bin`
+`serverless dynamodb install --localPath ./bin`
 
 `serverless offline start`
 
