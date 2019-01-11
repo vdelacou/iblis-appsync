@@ -1,0 +1,29 @@
+# Define the model Battlestar
+type Battlestar {
+  # the id of the Battlestar
+  id: ID! # the primary partition key in DynamoDB
+  # the name of the Battlestar
+  name: String!
+}
+# Define the queries
+type Query {
+  # list all Battlestars
+  listBattlestars: [Battlestar]
+}
+# Define the input to create a Battlestar
+input PutBattlestarInput {
+  # the name of the Battlestar to create
+  name: String!
+}
+# Define the mutations
+type Mutation {
+  # Create a Battlestar
+  putBattlestar(input: PutBattlestarInput): Battlestar
+}
+# Define the schema
+schema {
+  # all the queries
+  query: Query
+  # all the mutations
+  mutation: Mutation
+}

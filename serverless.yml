@@ -1,0 +1,53 @@
+service: iblis-appsync
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-appsync-plugin
+  - serverless-appsync-offline
+  - serverless-offline
+
+custom:
+  appSync: # appsync plugin configuration
+    name: iblis-appsync    
+    authenticationType: API_KEY # use API_KEY in this tutorial
+    dataSources:
+      - type: AMAZON_DYNAMODB
+        name: battlestarsSource # name of the resource
+        config:
+          tableName: battlestarsTable # name of our DynamoDB table
+    mappingTemplates:
+      - dataSource: battlestarsSource
+        type: Query
+        field: listBattlestars # from the query in schema.graphql
+        request: "list_battlestars/request.vtl"
+        response: "list_battlestars/response.vtl"
+      - dataSource: battlestarsSource
+        type: Mutation
+        field: putBattlestar # from the mutation in schema.graphql
+        request: "put_battlestar/request.vtl"
+        response: "put_battlestar/response.vtl"
+  appsync-offline: # appsync-offline configuration
+    port: 62222
+    dynamodb:
+      client:
+        endpoint: "http://localhost:8000"        
+
+resources:
+  Resources:
+    battlestarsTable: # name of the resource to be use later
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: battlestarsTable # name of the table
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id # partition key
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
